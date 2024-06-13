@@ -11,7 +11,7 @@ const { MongoClient, ObjectId } = require('mongodb');
 
 require('dotenv').config();
 
-const mongoClient = new MongoClient(process.env.DATABASE_URL);
+const mongoClient = new MongoClient(process.env.MONGO);
 let infobases = new Map();
 
 const urlencodedParser = express.urlencoded({ extended: false });
@@ -25,7 +25,7 @@ const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
 app.get('/', (_, res) => {
-    staticFile(res, '/html/main.html', '.html');
+    staticFile(res, '/html/index.html', '.html');
 });
 
 app.get('/editor', (_, res) => {
@@ -200,7 +200,6 @@ app.post('/cursor-positions-update/:saveName', urlencodedParser, (req, res) => {
 
         res.end(JSON.stringify(infobase.getUserPositions()));
     }
-
 });
 
 app.get('/favicon.ico', (_, res) => {
@@ -233,4 +232,4 @@ io.on('connection', (socket) => {
     });
 });
 
-http.listen(process.env.PORT, '0.0.0.0', () => console.log('Server is active'));
+http.listen(process.env.PORT, process.env.HOSTNAME, () => console.log('Server is active'));
