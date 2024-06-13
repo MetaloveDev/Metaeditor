@@ -1,11 +1,13 @@
-FROM node:latest
+FROM node:21-alpine
 
-WORKDIR /usr/src/app
+WORKDIR /app
 
-COPY package*.json ./
+RUN apk update && apk add bash
+
+COPY ./package.json .
 
 RUN npm install
 
 COPY . .
 
-CMD ["node", "app.js"]
+ENTRYPOINT ["npm", "start"]
