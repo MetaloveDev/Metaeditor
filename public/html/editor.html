@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/editorStyle.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <title>MetaEditor</title>
+</head>
+
+<body>
+    <div id="loading-chapter-screen" class="loading-chapter-screen" style="display: none;">
+        <p>Loading save...</p>
+    </div>
+    <div id="zoom">
+        <div id="workplace" class="workplace">
+            <div class="dot-template" style="background-image: url(images/dot.png)"></div>
+            <div id="template-context-menu" class="template-context-menu"></div>
+            <div class="selection-container" id="selection-container"></div>
+            <div class="block-connection-info-panel" id="block-connection-info-panel">
+                <p>Click on another block to connect</p>
+                <img src="images/tip.png">
+            </div>
+        </div>
+    </div>
+
+    <div class="header" id="header">
+        <input type="file" id="fileInputToLoad" accept=".cce" style="display: none;" />
+        <button id="saveButton" class="headerButton">
+            <img src="images/save.png">
+            <div>
+                <h3>Save (.cce)</h3>
+                <p>Ctrl+S</p>
+            </div>
+        </button>
+        <button id="loadButton" class="headerButton">
+            <img src="images/load.png">
+            <div>
+                <h3>Load</h3>
+                <p>Ctrl+O</p>
+            </div>
+        </button>
+        <button id="exportButton" class="headerButton">
+            <img src="images/export.png">
+            <div>
+                <h3>Export .json</h3>
+                <p>Ctrl+E</p>
+            </div>
+        </button>
+        <button id="statButton" class="headerButton">
+            <img src="images/stat.png">
+            <div>
+                <h3>Statistics</h3>
+                <p>Ctrl+I</p>
+            </div>
+        </button>
+        <button id="helpButton" class="headerButton">
+            <img src="images/help.png">
+            <div>
+                <h3>Help</h3>
+                <p>Ctrl+H</p>
+            </div>
+        </button>
+        <button id="customizeButton" class="headerButton">
+            <img src="images/settings.png">
+            <div>
+                <h3>Customize</h3>
+                <p>Ctrl+U</p>
+            </div>
+        </button>
+    </div>
+
+    <div class="buttons-bar">
+        <div id="target">
+            <img src="images/target.png">
+        </div>
+        <div id="up">
+            <img src="images/up.png">
+        </div>
+        <div id="link">
+            <img src="images/link.png">
+        </div>
+    </div>
+
+    <div class="black-panel" id="help" style="display: none;">
+        <div class="window window-close" id="help-window">
+            <div class="side-header">
+                <p>Help</p>
+                <a class="header-button help-header-button"
+                    href="https://docs.google.com/document/d/1n1ZzeUs44A2kmLjokA5K4eTSwA4Qu46xhLXFN7OOqLI/edit#heading=h.atk6pn2togi0"
+                    target=”_blank”>
+                    <img src="images/Icons/link.png">
+                    <p>Documentation</p>
+                </a>
+                <img class="close" id="help-close" src="images/cross.png">
+            </div>
+            <div class="help-main">
+                <div class="interactive-list">
+                    <div class="interactive-element">
+                        <p>Select</p>
+                        <img src="images/Buttons/Left.png">
+                    </div>
+                    <div class="interactive-element">
+                        <p>Select more</p>
+                        <img src="images/Buttons/Left.png">
+                        <img src="images/Buttons/plus.png" width="10" height="10">
+                        <img src="images/Buttons/Shift.png">
+                    </div>
+                    <div class="interactive-element">
+                        <p>Drag</p>
+                        <img src="images/Buttons/Center.png">
+                    </div>
+                    <div class="interactive-element">
+                        <p>Drag</p>
+                        <img src="images/Buttons/Left.png">
+                        <img src="images/Buttons/plus.png" width="10" height="10">
+                        <img src="images/Buttons/Ctrl.png">
+                    </div>
+                    <div class="interactive-element">
+                        <p>Zoom</p>
+                        <img src="images/Buttons/Center.png">
+                        <img src="images/Buttons/Scroll.png">
+                    </div>
+                    <div class="interactive-element">
+                        <p>Creation menu</p>
+                        <img src="images/Buttons/Right.png">
+                    </div>
+                    <div class="interactive-element">
+                        <p>Delete item</p>
+                        <img src="images/Buttons/Del.png">
+                    </div>
+                    <div class="interactive-element">
+                        <p>Move to last frame</p>
+                        <img src="images/target.png">
+                    </div>
+                    <div class="interactive-element">
+                        <p>Add line</p>
+                        <img src="images/Buttons/Left.png">
+                        <img src="images/Buttons/x.png" width="10" height="10">
+                        <img src="images/Buttons/Circle.png" width="20" height="20">
+                    </div>
+                    <div class="interactive-element">
+                        <p>Full text mode</p>
+                        <img src="images/Buttons/Resize.png">
+                    </div>
+                    <div class="interactive-element">
+                        <p>Delete key</p>
+                        <img src="images/Buttons/Delete.png">
+                    </div>
+                    <div class="interactive-element">
+                        <p>Move to first frame</p>
+                        <img src="images/up.png">
+                    </div>
+                    <div class="interactive-element">
+                        <p>Move to frame by ID</p>
+                        <img src="images/link.png">
+                    </div>
+                </div>
+                <div class="terminator"></div>
+                <div class="interactive-list">
+                    <div class="interactive-element">
+                        <p>Save file</p>
+                        <p>Ctrl+S</p>
+                    </div>
+                    <div class="interactive-element">
+                        <p>Open file</p>
+                        <p>Ctrl+O</p>
+                    </div>
+                    <div class="interactive-element">
+                        <p>Export</p>
+                        <p>Ctrl+E</p>
+                    </div>
+                    <div class="interactive-element">
+                        <p>Statictics</p>
+                        <p>Ctrl+I</p>
+                    </div>
+                    <div class="interactive-element">
+                        <p>Help</p>
+                        <p>Ctrl+H</p>
+                    </div>
+                    <div class="interactive-element">
+                        <p>Customize</p>
+                        <p>Ctrl+U</p>
+                    </div>
+                    <div class="interactive-element">
+                        <p>Duplicate</p>
+                        <p>Ctrl+D</p>
+                    </div>
+                    <div class="interactive-element">
+                        <p>Move to begin</p>
+                        <p>Ctrl+B</p>
+                    </div>
+                    <div class="interactive-element">
+                        <p>Move to last added</p>
+                        <p>Ctrl+T</p>
+                    </div>
+                    <div class="interactive-element">
+                        <p>Undo</p>
+                        <p>Ctrl+Z</p>
+                    </div>
+                    <div class="interactive-element">
+                        <p>Version</p>
+                        <p style="color:#FF5E7B">v1.0.4</p>
+                    </div>
+                    <div class="change-list">
+                        <p>Bookmarks</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modular-popup" id="block-id-popup" style="display: none;">
+        <p>Enter block id</p>
+        <input type="number" id="block-id-poput-input" placeholder="Id number....">
+        <div>
+            <button type="submit" id="block-id-poput-submit">Submit</button>
+            <button type="reset" id="block-id-poput-cancel">Cancel</button>
+        </div>
+    </div>
+
+    <div class="modular-popup" id="chapter-popup" style="display: none;">
+        <p>Enter chapter number</p>
+        <input type="number" id="chapter-poput-input" placeholder="Chapter number....">
+        <div>
+            <button type="submit" id="chapter-poput-submit">Submit</button>
+            <button type="reset" id="chapter-poput-cancel">Cancel</button>
+        </div>
+    </div>
+
+    <div class="modular-popup" id="export-info-popup" style="display: none;">
+        <p id="export-info-text">Some text...</p>
+        <div>
+            <button type="submit" id="export-info-submit">Submit</button>
+        </div>
+    </div>
+
+    <div class="black-panel" id="stats" style="display: none;">
+        <div class="window window-close" id="stats-window">
+            <div class="side-header">
+                <p>Statistics</p>
+                <img src="images/Icons/good.png" class="icon" id="stat-icon">
+                <img src="images/Icons/arrow.png" class="stats-arrow">
+                <button id="stats-export" class="header-button">
+                    <img src="images/export.png">
+                    <p>Export .json</p>
+                </button>
+                <img class="close" id="stats-close" src="images/cross.png">
+            </div>
+            <div class="stats-main">
+                <div class="stats-main-header">
+                    <p id="stat-metrics">Metrics</p>
+                    <p id="stat-console">Console</p>
+                    <p id="stat-list">Check list</p>
+                </div>
+                <div class="stats-main-body" id="stats-main-body"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="black-panel" id="customize" style="display: none;">
+        <div class="window window-close customize" id="customize-window">
+            <div class="side-header">
+                <input type="file" id="schemeToLoad" accept=".scheme" style="display: none;" />
+                <p style="margin-right: 25px;">Customize</p>
+                <button id="save-scheme" class="header-button">
+                    <img src="images/save.png">
+                    <p>Save scheme</p>
+                </button>
+                <button id="load-scheme" class="header-button">
+                    <img src="images/load.png">
+                    <p>Load scheme</p>
+                </button>
+                <button id="reset-scheme" class="header-button">
+                    <img src="images/red-cross.png">
+                    <p>Reset</p>
+                </button>
+                <img class="close" id="customize-close" src="images/cross.png">
+            </div>
+            <div class="customize-body" id="customize-body">
+                <div class="customize-body-content">
+                    <div class="container" id="customize-body-content">
+
+                    </div>
+                </div>
+                <div class="colors-template-menu" id="colors-template-menu"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="loading-screen" id="loading-screen"></div>
+    <div class="tooltip" id="tooltip"></div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="javascripts/Editor/Entities/Tooltip.js"></script>
+    <script src="javascripts/Editor/Entities/Form.js"></script>
+    <script src="javascripts/Editor/Entities/Block.js"></script>
+    <script src="javascripts/Editor/Entities/Vector2.js"></script>
+    <script src="javascripts/Editor/Entities/Arrow.js"></script>
+    <script src="javascripts/Editor/Entities/KeyValuePairForm.js"></script>
+    <script src="javascripts/Editor/Entities/TemplatesContextMenu.js"></script>
+    <script src="javascripts/Editor/Entities/EndBlock.js"></script>
+    <script src="javascripts/Editor/Entities/Bookmark.js"></script>
+    <script src="javascripts/Editor/Entities/Cursor.js"></script>
+    <script src="javascripts/Editor/Constants/FrameTypes.js"></script>
+    <script src="javascripts/Editor/Constants/FieldTypes.js"></script>
+    <script src="javascripts/Editor/Constants/ArrowTypes.js"></script>
+    <script src="javascripts/Editor/Constants/CharacterImages.js"></script>
+    <script src="javascripts/Editor/Constants/Colors.js"></script>
+    <script src="javascripts/Editor/GlobalValues.js"></script>
+    <script src="javascripts/Editor/Constants/MetricsList.js"></script>
+    <script src="javascripts/Editor/WorkplaceManager.js"></script>
+    <script src="javascripts/Editor/FromJSONConverter.js"></script>
+    <script src="javascripts/Editor/ShortCuts.js"></script>
+    <script src="javascripts/Editor/SelectionContainer.js"></script>
+    <script src="javascripts/Editor/Export/Exporter.js"></script>
+    <script src="javascripts/Editor/Export/Constants/Parameters.js"></script>
+    <script src="javascripts/Editor/Export/Entities/Converter.js"></script>
+    <script src="javascripts/Editor/Export/Entities/JSONFrame.js"></script>
+    <script src="javascripts/Editor/Export/Entities/TextFrame.js"></script>
+    <script src="javascripts/Editor/Export/Entities/AnimationFrame.js"></script>
+    <script src="javascripts/Editor/Export/Entities/CustomizeFrame.js"></script>
+    <script src="javascripts/Editor/Export/Entities/DialogFrame.js"></script>
+    <script src="javascripts/Editor/Export/Entities/PropsFrame.js"></script>
+    <script src="javascripts/Editor/Export/Entities/ChoiceFrame.js"></script>
+    <script src="javascripts/Editor/Export/Entities/ChoiceByCharacterFrame.js"></script>
+    <script src="javascripts/Editor/Export/Entities/ChoiceByChoiceFrame.js"></script>
+    <script src="javascripts/Editor/Export/Entities/BubbleFrame.js"></script>
+    <script src="javascripts/Editor/Export/Entities/LoveFrame.js"></script>
+    <script src="javascripts/Editor/Export/Entities/ItemCheckFrame.js"></script>
+    <script src="javascripts/Editor/Export/Entities/LuckyFrame.js"></script>
+    <script src="javascripts/Editor/Export/Entities/MaxLoveFrame.js"></script>
+    <script src="javascripts/Editor/Export/Entities/LoveForkFrame.js"></script>
+    <script src="javascripts/Editor/Export/Entities/CounterFrame.js"></script>
+    <script src="javascripts/Editor/Export/Entities/CounterCheckFrame.js"></script>
+    <script src="javascripts/Editor/Export/Entities/CounterComparisonFrame.js"></script>
+    <script src="javascripts/Editor/Export/Entities/CounterValueFrame.js"></script>
+    <script src="javascripts/Editor/Export/Entities/PropShowFrame.js"></script>
+    <script src="javascripts/Editor/Export/Entities/AutoCustomizeFrame.js"></script>
+    <script src="javascripts/Editor/Export/Entities/MazeFrame.js"></script>
+    <script src="javascripts/Editor/Undo/Stack.js"></script>
+    <script src="javascripts/Editor/Undo/UndoRedoManager.js"></script>
+    <script src="javascripts/Editor/Export/JSONGenerator.js"></script>
+    <script src="javascripts/Editor/Statistics/StatisticsManager.js"></script>
+    <script src="javascripts/Editor/Statistics/Metrics.js"></script>
+    <script src="javascripts/Editor/Statistics/Console.js"></script>
+    <script src="javascripts/Editor/Statistics/CheckList.js"></script>
+    <script src="javascripts/Editor/CustomizeManager.js"></script>
+    <script src="javascripts/Editor/StoryBorders.js"></script>
+    <script src="javascripts/Editor/EditorMainScript.js"></script>
+    <script src="javascripts/Editor/OnLoad.js"></script>
+    <script src="javascripts/Editor/ChangesManager.js"></script>
+</body>
+
+</html>
