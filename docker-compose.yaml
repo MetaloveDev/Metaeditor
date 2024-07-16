@@ -4,11 +4,42 @@ networks:
 
 services:
 
-  site:
+  frontend:
     build:
       context: ./
       dockerfile: ./Dockerfile
 
-    container_name: site
+    container_name: metaeditor_frontend
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.services.frontend.loadbalancer.server.port=${PORT}"
+      - "traefik.http.routers.frontend.rule=Host(`${HOSTNAME}`)"
+      - "traefik.http.routers.frontend.entrypoints=websecure" # tls
+      - "traefik.http.routers.frontend.tls.certresolver=myresolver" # tls
+      - "traefik.http.middlewares.frontend.redirectscheme.scheme=https" # test autoredirect to https
+    depends_on:
+      - traefik
+    networks:
+      - app-network
+
+
+  traefik:
+    container_name: metaeditor_traefik
+    image: traefik
+    command:
+      - "--api.insecure=false"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443" # tls
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true" # tls
+      - "--certificatesresolvers.myresolver.acme.email=devops@metalovegame.one" # tls
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json" # tls
     ports:
-      - "${PORT}:${PORT}"
+      - "80:80"
+      - "443:443" # tls
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "./letsencrypt:/letsencrypt" # tls
+    networks:
+      - app-network
