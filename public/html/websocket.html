@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Socket.io example</title>
+</head>
+
+<body>
+    <button onclick="sendMessageToServer()">
+        Send message to server
+    </button>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        let socket = io("http://localhost:3700/");
+
+        socket.on('message', (message) =>
+            console.log(
+                'Message from server: ',
+                message
+            )
+        );
+
+        function sendMessageToServer() {
+            socket.emit('message', "I'm client");
+        }
+    </script>
+</body>
+
+</html>
